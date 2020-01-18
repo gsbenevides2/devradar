@@ -1,10 +1,10 @@
 const Dev = require('../models/dev.js')
-
+const parseStringAsArray = require("../utils/parseStringAsArray")
 module.exports = {
     async index(request, response) {
         const { longitude, latitude, techs } = request.query
 
-        const techsArray = techs.split(',').map(tech => tech.trim())
+        const techsArray = parseStringAsArray(techs)
 
         const devs = await Dev.find({
             techs: {
