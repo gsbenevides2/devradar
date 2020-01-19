@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "mobile",
-    "slug": "mobile",
+    "name": "DevRadar",
+    "slug": "DevRadar",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
