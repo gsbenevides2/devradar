@@ -1,6 +1,11 @@
-# DevRadar
 
-Projeto resultado da Semana OmniStack 10 da [Rocketseat](https://rocketseat.com.br/). Ele consiste em criar uma aplicação simples de localização de desenvolvedores que usam as mesmas tecnologias.
+<h1 align="center">
+    <img alt="DevRadar" title="#delicinha" src="logo.png" width="250px" />
+</h1>
+
+<h1 align="center">DevRadar</h1>
+
+Projeto resultado da [Semana OmniStack 10](https://github.com/Rocketseat/semana-omnistack-10) da [Rocketseat](https://rocketseat.com.br/). Ele consiste em criar uma aplicação simples de localização de desenvolvedores que usam as mesmas tecnologias.
 
 ## Estrutura das pastas
 
