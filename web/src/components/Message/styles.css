@@ -1,0 +1,13 @@
+.message{
+ background-color:#121212;
+ color:#fff;
+ width:calc(100% - 40px);
+ padding:20px;
+ position:absolute;
+ top:-70px;
+ left:0;
+ transition:0.5s;
+}
+.message.show{
+ top:0;
+}

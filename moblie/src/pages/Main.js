@@ -208,7 +208,7 @@ const styles = StyleSheet.create({
  loadButton: {
 	width: 50,
 	height: 50,
-	backgroundColor: '#E5BE01',
+	backgroundColor: '#7D40E7',
 	borderRadius: 25,
 	justifyContent: 'center',
 	alignItems: 'center',
