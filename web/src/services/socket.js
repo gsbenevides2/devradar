@@ -1,9 +1,4 @@
 import socketIo from 'socket.io-client'
-import * as WebBrowser from 'expo-web-browser';
-
-import {AsyncStorage} from 'react-native'
-
-let urlReceived
 
 const socket = socketIo("http://localhost:3333",{
  autoConnect:false
@@ -20,18 +15,17 @@ function receiveDevs(subscribeFunction){
 function connect(latitude,longitude,techs){
  socket.connect()
 }
-function tryUrlAgain(){
-	 WebBrowser.openBrowserAsync(urlReceived)
-}
+
 function autenticate(){
+ let popup 
  return new Promise(resolve=>{
 	socket.emit("subscribeToAutenticate")
 	socket.on("receiveUrl",url=>{
-	 urlReceived = url
-	 WebBrowser.openBrowserAsync(url)
+	 popup = window.open(url)
 	})
 	socket.on("receiveToken",token=>{
-	 AsyncStorage.setItem("AcessToken",token)
+	 popup.close()
+	 console.log(token)
 	 resolve(token)
 	})
  })
@@ -41,11 +35,10 @@ function disconnect(){
 	socket.disconnect()
  }
 }
-export default {
+export {
  connect,
  disconnect,
  autenticate,
  receiveDevs,
- tryUrlAgain,
  subscribeToNewDevs
 }

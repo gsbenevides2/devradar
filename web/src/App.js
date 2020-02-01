@@ -1,6 +1,6 @@
 import React, {useEffect,useState} from 'react';
 import api from "./services/api"
-
+import {connect,autenticate} from "./services/socket"
 import DevItem from  "./components/DevItem"
 import Message from  "./components/Message"
 import DevForm from  "./components/DevForm"
@@ -8,6 +8,7 @@ import "./global.css"
 import "./App.css"
 import "./aside.css"
 import "./main.css"
+connect()
 function App() {
  const [devs,setDevs] = useState([])
  const [msg,setMsg] = useState(null)
@@ -19,12 +20,18 @@ function App() {
 	loadDevs()
  })
  function handleSubmit(data){
-	api.post("/devs",data)
-	 .then(response=>{
-		setMsg(`Ola ${response.data.name} 🙂☺️`)
-		setTimeout(()=>setMsg(null),2000)
-		setDevs([...devs,response.data])
-	 })
+	return new Promise(resolve=>{
+	 autenticate()
+		.then(accessToken=>{
+		 api.post("/devs",{...data,accessToken})
+			.then(response=>{
+			 setMsg(`Ola ${response.data.name} 🙂☺️`)
+			 setTimeout(()=>setMsg(null),2000)
+			 setDevs([...devs,response.data])
+			 resolve()
+			})
+		})
+	})
  }
  return (
 	<div id="app">

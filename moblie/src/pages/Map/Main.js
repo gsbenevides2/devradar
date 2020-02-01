@@ -1,11 +1,29 @@
-import React, { useEffect, useState, useRef } from 'react'
-import { StyleSheet, Image, View, Text, TextInput, TouchableOpacity } from 'react-native'
-import MapView, { Marker, Callout } from 'react-native-maps'
-import { requestPermissionsAsync, getCurrentPositionAsync } from 'expo-location'
+import React,{
+	useEffect,
+	useState, 
+	useRef 
+}from 'react'
+import { 
+ StyleSheet, 
+ Image, 
+ View, 
+ Text, 
+ TouchableOpacity 
+} from 'react-native'
+
+import MapView, 
+ { Marker, Callout } 
+from 'react-native-maps'
+
+import { 
+ requestPermissionsAsync,
+ getCurrentPositionAsync 
+} from 'expo-location'
 import { MaterialIcons } from '@expo/vector-icons'
 
-import api from '../services/api'
-import {connect,disconnect,subscribeToNewDevs} from '../services/socket'
+import TextInput from '../../components/TextInput'
+import api from '../../services/api'
+import webSocket from '../../services/socket'
 
 function Main({ navigation }) {
  const [devs, setDevs] = useState([])
@@ -29,6 +47,9 @@ function Main({ navigation }) {
 		longitudeDelta: 0.04
 	 })
 	}
+ }
+ function addDev(dev){
+	console.log(devs)
  }
  useEffect(() => {
 	loadInitialPosition()
@@ -58,14 +79,6 @@ function Main({ navigation }) {
 	 )
 	}
  }
- useEffect(()=>{
-	subscribeToNewDevs(dev=>setDevs([...devs,dev]))
- },[devs])
- function setupWebSocket(){
-	disconnect()
-	const { latitude, longitude } = currentRegion
-	connect(latitude,longitude,techs)
- }
  async function loadDevs() {
 	const { latitude, longitude } = currentRegion
 	console.log(currentRegion)
@@ -77,10 +90,21 @@ function Main({ navigation }) {
 	 }
 	})
 	setDevs(response.data)
-	setupWebSocket()
+	webSocket.disconnect()
+	webSocket.connect()
+	webSocket.subscribeToNewDevs({
+	 latitude,
+	 longitude,
+	 techs
+	})
  }
-
+ useEffect(()=>{
+	webSocket.receiveDevs(dev=>setDevs([...devs,dev]))
+ },[devs])
  function handleRegionChange(region) {
+	if(techs !== ''){
+	 loadDevs()
+	}
 	setCurrentRegion(region)
  }
 
@@ -127,7 +151,6 @@ function Main({ navigation }) {
 
 	<View style={styles.searchForm}>
 	 <TextInput
-	 style={styles.searchInput}
 	 placeholder="Buscar devs por techs..."
 	 placeholderTextColor="#999"
 	 autoCapitalize="words"
@@ -186,23 +209,6 @@ const styles = StyleSheet.create({
 	right: 20,
 	zIndex: 5,
 	flexDirection: 'row'
- },
-
- searchInput: {
-	flex: 1,
-	height: 50,
-	backgroundColor: '#FFF',
-	color: '#333',
-	borderRadius: 25,
-	paddingHorizontal: 20,
-	fontSize: 16,
-	shadowColor: '#000',
-	shadowOpacity: 0.2,
-	shadowOffset: {
-	 width: 4,
-	 height: 4
-	},
-	elevation: 2
  },
 
  loadButton: {

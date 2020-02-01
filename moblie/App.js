@@ -1,6 +1,9 @@
 import React from 'react';
 import { StatusBar,YellowBox } from 'react-native'
-
+ 
+import { Provider } from 'react-redux'
+import store from './src/store'
+import FlashMessage from 'react-native-flash-message'
 import Routes from './src/routes'
 
 YellowBox.ignoreWarnings([
@@ -8,9 +11,10 @@ YellowBox.ignoreWarnings([
 ])
 export default function App() {
  return (
-	<>
-	<StatusBar barStyle='light-content' backgroundColor="#7D40E7" />
-	<Routes />
-	</>
+	<Provider store={store}>
+	 <StatusBar barStyle='light-content' backgroundColor="#7D40E7" />
+	 <Routes />
+	 <FlashMessage/>
+	</Provider>
  );
 }
