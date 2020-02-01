@@ -1,6 +1,14 @@
 import socketIo from 'socket.io-client'
 
-const socket = socketIo("http://localhost:3333",{
+let baseURL
+if(window.location.hostname === "omnistack-10-gsb.netlify.com"){
+ baseURL = "https://omnistack-10-gsb.herokuapp.com"
+}
+else{
+ baseURL = 'http://localhost:3333/'
+}
+
+const socket = socketIo(baseURL,{
  autoConnect:false
 })
 
