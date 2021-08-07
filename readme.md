@@ -3,6 +3,10 @@
     <img alt="DevRadar" title="#delicinha" src="logo.png" width="250px" />
 </h1>
 
+<p align="center">
+    <img width="550" src="https://dl.dropboxusercontent.com/s/3lqrfh5hl314o1z/Screenshot%20devradar.png?dl=0">
+</p>
+
 Projeto resultado da [Semana OmniStack 10](https://github.com/Rocketseat/semana-omnistack-10) da [Rocketseat](https://rocketseat.com.br/). Ele consiste em criar uma aplicação simples de localização de desenvolvedores que usam as mesmas tecnologias.
 
 ## Estrutura das pastas
