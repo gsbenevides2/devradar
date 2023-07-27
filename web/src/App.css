@@ -12,6 +12,10 @@
  margin-left: 30px;
 }
 
+#app aside {
+	 width: 320px;
+}
+
 @media (max-width: 1000px){
  #app {
 	flex-direction: column;

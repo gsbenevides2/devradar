@@ -1,52 +1,63 @@
 import socketIo from 'socket.io-client'
 
-let baseURL
-if(window.location.hostname === "omnistack-10-gsb.netlify.com"){
- baseURL = "https://omnistack-10-gsb.herokuapp.com"
-}
-else{
- baseURL = 'http://localhost:3333/'
+class Socket {
+	static instance = null
+	static async getInstance() {
+		if (Socket.instance === null) {
+			Socket.instance = await Socket.connect()
+		}
+		return Socket.instance
+	}
+
+	socker = null
+	constructor(socket) {
+		this.socket = socket
+	}
+
+	static async connect() {
+		return new Promise((resolve, reject) => {
+			const socketUrl =
+				process.env.REACT_APP_BACKEND_URL
+
+			console.log("WebSocket connecting to:", socketUrl)
+			const socket = socketIo(socketUrl)
+			socket.on("connect", () => {
+				console.log("WebSocket connected, id:", socket.id)
+				resolve(new Socket(socket))
+			})
+		})
+	}
+
+	subscribeToNewDevs(searchData) {
+		this.socket.emit("subscribeToNewDevs", searchData)
+	}
+
+	receiveDevs(subscribeFunction) {
+		this.socket.on("new-dev", subscribeFunction)
+	}
+
+	getAuthUrl() {
+		return new Promise((resolve, reject) => {
+			this.socket.on("receiveUrl", url => {
+				console.log("receiveUrl", url)
+				resolve(url)
+			})
+			this.socket.emit("subscribeToAutenticate")
+		})
+	}
+
+	listenToToken() {
+		return new Promise((resolve, reject) => {
+			this.socket.on("receiveToken", token => {
+				resolve(token)
+			})
+		})
+	}
+
+	disconnect() {
+		this.socket.disconnect()
+		Socket.instance = null
+	}
 }
 
-const socket = socketIo(baseURL,{
- autoConnect:false
-})
-
-function subscribeToNewDevs(searchData){
- socket.emit("subscribeToNewDevs",searchData)
-}
-
-function receiveDevs(subscribeFunction){
- socket.on("new-dev",subscribeFunction)
-}
-
-function connect(latitude,longitude,techs){
- socket.connect()
-}
-
-function autenticate(){
- let popup 
- return new Promise(resolve=>{
-	socket.emit("subscribeToAutenticate")
-	socket.on("receiveUrl",url=>{
-	 popup = window.open(url)
-	})
-	socket.on("receiveToken",token=>{
-	 popup.close()
-	 console.log(token)
-	 resolve(token)
-	})
- })
-}
-function disconnect(){
- if(socket.connected){
-	socket.disconnect()
- }
-}
-export {
- connect,
- disconnect,
- autenticate,
- receiveDevs,
- subscribeToNewDevs
-}
+export default Socket
