@@ -21,9 +21,9 @@ services:
     environment:
       - GITHUB_CLIENT_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxx
       - GITHUB_CLIENT_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-      - DB_HOST=db
-      - DB_PORT=27017
-      - DB_USER=benevides
-      - DB_PASSWORD=benevides
+      - DBHOST=db
+      - DBPORT=27017
+      - DBUSER=benevides
+      - DBPASSWORD=benevides
     depends_on:
       - db
