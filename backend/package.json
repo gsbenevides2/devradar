@@ -5,19 +5,19 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-		"heroku-set-env":"heroku config:set $(cat .env | sed '/^$/d; /#[[:print:]]*$/d')"
+    "heroku-set-env": "heroku config:set $(cat .env | sed '/^$/d; /#[[:print:]]*$/d')"
   },
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.19.1",
+    "axios": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongoose": "^5.8.7",
     "simple-oauth2": "^3.1.0",
-    "socket.io": "^2.3.0"
+    "socket.io": "^4.7.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.2"
+    "nodemon": "^3.0.1"
   }
 }

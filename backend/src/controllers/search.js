@@ -3,7 +3,7 @@ const parseStringAsArray = require("../utils/parseStringAsArray")
 module.exports = {
     async index(request, response) {
         const { longitude, latitude, techs } = request.query
-
+        console.log(request.query)
         const techsArray = parseStringAsArray(techs)
 
         const devs = await Dev.find({
