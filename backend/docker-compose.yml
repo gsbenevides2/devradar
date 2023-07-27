@@ -4,10 +4,10 @@ services:
     image: mongo:4.4.6
     restart: always
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=benevides
-      - MONGO_INITDB_ROOT_PASSWORD=benevides
+      - MONGO_INITDB_ROOT_USERNAME=${DBUSER}
+      - MONGO_INITDB_ROOT_PASSWORD=${DBPASSWORD}
     ports:
-      - 27017:27017
+      - ${DBPORT}:27017
     healthcheck:
       test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
       interval: 10s
@@ -19,13 +19,13 @@ services:
     ports:
       - 3003:3000
     environment:
-      - GITHUB_CLIENT_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxx
-      - GITHUB_CLIENT_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-      - GITHUB_CALLBACK_URL=xxxxxxx/auth/github/callback
-      - DBHOST=db
-      - DBPORT=27017
-      - DBUSER=benevides
-      - DBPASSWORD=benevides
+      - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
+      - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
+      - GITHUB_CALLBACK_URL=${GITHUB_CALLBACK_URL} # http://localhost:3000/auth/github/callback
+      - DBHOST=${DBHOST}
+      - DBPORT=${DBPORT}
+      - DBUSER=${DBUSER}
+      - DBPASSWORD=${DBPASSWORD}
       - PORT=3000
     depends_on:
       - db
