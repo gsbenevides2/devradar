@@ -16,7 +16,7 @@ const oauth2 = simpleOauth2.create(credentials)
 
 module.exports = {
 	redirect(id) {
-		const callbackUrl = `${process.env.GITHUB_CLIENT_CALLBACK_URL}?id=${id}`
+		const callbackUrl = `${process.env.GITHUB_CALLBACK_URL}?id=${id}`
 		const authorizationUri = oauth2.authorizationCode.authorizeURL({
 			redirect_uri: callbackUrl,
 			scope: 'user',
