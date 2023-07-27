@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "DevRadar",
+    "slug": "DevRadar",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#7D40E7"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.gsbenevides2.DevRadar"
+    },
+    "androidNavigationBar": {
+      "backgroundColor": "#7D40E7",
+      "barStyle": "light-content"
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#7D40E7",
+      "barStyle": "light-content"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "98130739-1743-4972-8437-b710efaeaef9"
+      }
+    }
+  }
+}

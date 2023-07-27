@@ -1,12 +1,12 @@
 import React from 'react';
-import { StatusBar,YellowBox } from 'react-native'
+import { StatusBar,LogBox } from 'react-native'
  
 import { Provider } from 'react-redux'
 import store from './src/store'
 import FlashMessage from 'react-native-flash-message'
 import Routes from './src/routes'
 
-YellowBox.ignoreWarnings([
+LogBox.ignoreLogs([
  "Unrecognized WebSocket"
 ])
 export default function App() {
