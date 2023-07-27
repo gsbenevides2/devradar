@@ -9,7 +9,11 @@ const connectionsToNewDevs = []
 
 let io
 exports.setupWebSocket = server => {
-	io = socketIo(server)
+	io = socketIo(server, {
+		cors: {
+			origin: "*",
+		}
+	})
 	io.on('connection', socket => {
 		console.log("Web Socket Connected From:", socket.id, "Total:", io.engine.clientsCount, "clients", "IP:", socket.handshake.address)
 
