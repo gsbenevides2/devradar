@@ -1,0 +1,29 @@
+version: "3.1"
+services:
+  db:
+    image: mongo:4.4.6
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=benevides
+      - MONGO_INITDB_ROOT_PASSWORD=benevides
+    ports:
+      - 27017:27017
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
+      interval: 10s
+      timeout: 2s
+      retries: 30
+  node:
+    build: .
+    restart: always
+    ports:
+      - 3003:3000
+    environment:
+      - GITHUB_CLIENT_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+      - GITHUB_CLIENT_SECRET=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+      - DB_HOST=db
+      - DB_PORT=27017
+      - DB_USER=benevides
+      - DB_PASSWORD=benevides
+    depends_on:
+      - db
