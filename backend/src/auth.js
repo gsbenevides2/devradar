@@ -14,16 +14,22 @@ const credentials = {
 }
 const oauth2 = simpleOauth2.create(credentials)
 
+function getAuthUrl(id) {
+	const callbackUrl = `${process.env.GITHUB_CALLBACK_URL}?id=${id}`
+	const authorizationUri = oauth2.authorizationCode.authorizeURL({
+		redirect_uri: callbackUrl,
+		scope: 'user',
+		state: '3(#0/!~',
+	});
+	return authorizationUri
+}
+
 module.exports = {
-	redirect(id) {
-		const callbackUrl = `${process.env.GITHUB_CALLBACK_URL}?id=${id}`
-		const authorizationUri = oauth2.authorizationCode.authorizeURL({
-			redirect_uri: callbackUrl,
-			scope: 'user',
-			state: '3(#0/!~',
-		});
-		return authorizationUri
+	redirectForMobile(request, response) {
+		const id = request.query.id
+		response.redirect(getAuthUrl(id))
 	},
+	getAuthUrl: getAuthUrl,
 	async callback(request, response) {
 		const { code, id } = request.query
 		const options = { code }

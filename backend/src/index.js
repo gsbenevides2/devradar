@@ -7,7 +7,7 @@ const { setupWebSocket } = require("./websocket")
 require("dotenv").config()
 
 
-const host = process.env.DBHOST 
+const host = process.env.DBHOST
 const user = process.env.DBUSER
 const password = process.env.DBPASSWORD
 const port = process.env.DBPORT
@@ -28,4 +28,6 @@ app.use(cors())
 app.use(express.json())
 app.use(routes)
 setupWebSocket(server)
-server.listen(process.env.PORT || 3333, () => console.log("OK"))
+
+const portServer = process.env.PORT || 3333
+server.listen(portServer, () => console.log("Server is running on port: " + portServer))

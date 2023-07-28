@@ -38,7 +38,7 @@ exports.setupWebSocket = server => {
 
 		socket.on("subscribeToAutenticate", () => {
 			console.log("Web Socket subscribeToAutenticate", "From Socket:", socket.id)
-			socket.emit("receiveUrl", auth.redirect(socket.id))
+			socket.emit("receiveUrl", auth.getAuthUrl(socket.id))
 		})
 		socket.on("disconnect", () => {
 			for (let i = 0; i < connectionsToNewDevs.length; i++) {
