@@ -16,7 +16,7 @@ class Socket {
 
 	static async connect() {
 		return new Promise((resolve, reject) => {
-			const socketUrl = "https://google.gui.dev.br:3103"
+			const socketUrl = process.env.EXPO_PUBLIC_BACKEND_URL
 			console.log("WebSocket connecting to:", socketUrl)
 			const socket = socketIo(socketUrl)
 			socket.on("connect", () => {
@@ -32,6 +32,10 @@ class Socket {
 
 	receiveDevs(subscribeFunction) {
 		this.socket.on("new-dev", subscribeFunction)
+	}
+
+	getSocketId() {
+		return this.socket.id
 	}
 
 	getAuthUrl() {

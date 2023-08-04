@@ -52,24 +52,24 @@ function CreateUser(props) {
 		try {
 			const authUrl = await socket.getAuthUrl()
 			WebBrowser.openBrowserAsync(authUrl)
-			const accessToken = await socket.listenToToken()
-			const { data } = await api.post("/dev", {
-				accessToken,
-				techs,
-				latitude,
-				longitude
-			})
+			await socket.listenToToken().then(async accessToken => {
+				const { data } = await api.post("/dev", {
+					accessToken,
+					techs,
+					latitude,
+					longitude
+				})
 
-			showMessage({
-				message: 'Seja bem-vindo',
-				description: `Olá ${data.name}`,
-				type: 'success'
+				showMessage({
+					message: 'Seja bem-vindo',
+					description: `Olá ${data.name}`,
+					type: 'success'
+				})
+				setTimeout(() => {
+					props.dispatch(authActions.setToken(accessToken))
+					props.dispatch(authActions.setUserData(data))
+				}, 1505)
 			})
-			setTimeout(() => {
-				props.dispatch(authActions.setToken(accessToken))
-				props.dispatch(authActions.setUserData(data))
-			}, 1505)
-
 		} catch (error) {
 			console.error(error)
 			const { data, status } = error.response

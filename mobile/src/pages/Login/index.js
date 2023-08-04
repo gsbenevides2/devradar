@@ -31,23 +31,30 @@ function Login(props) {
 		const socket = await Socket.getInstance()
 		try {
 			const authUrl = await socket.getAuthUrl()
-			WebBrowser.openAuthSessionAsync(authUrl)
-			const token = await socket.listenToToken()
-			const response = await api.get("/dev", { params: { accessToken: token } })
-			showMessage({
-				message: 'Seja bem-vindo',
-				description: `Olá novamente ${response.data.name}`,
-				type: 'success'
+			//Alert.alert("Aviso", "Você será redirecionado para o Github para autenticação:" + authUrl)
+			await WebBrowser.openBrowserAsync(authUrl)
+			await socket.listenToToken().then(async token => {
+				const response = await api.get("/dev", { params: { accessToken: token } })
+				showMessage({
+					message: 'Seja bem-vindo',
+					description: `Olá novamente ${response.data.name}`,
+					type: 'success'
+				})
+				setTimeout(() => {
+					dispatch(authActions.setToken(token))
+					dispatch(authActions.setUserData(response.data))
+				}, 1505)
 			})
-			setTimeout(() => {
-				dispatch(authActions.setToken(token))
-				dispatch(authActions.setUserData(response.data))
-			}, 1505)
 		} catch (err) {
 			if (err.response.status === 404) {
 				showMessage({
 					message: 'Usuário não encontrado',
 					description: `Você não está cadastrado`,
+				})
+			} else {
+				showMessage({
+					message: 'Erro',
+					description: `Erro ao tentar autenticar` + err.message
 				})
 			}
 		} finally {
