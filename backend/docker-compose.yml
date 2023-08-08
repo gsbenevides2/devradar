@@ -1,6 +1,7 @@
 version: "3.1"
 services:
   db:
+    container_name: devradar-db
     image: mongo:4.4.6
     restart: always
     environment:
@@ -14,6 +15,7 @@ services:
       timeout: 2s
       retries: 30
   node:
+    container_name: devradar-node
     build: .
     restart: always
     ports:
